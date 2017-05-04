@@ -80,9 +80,8 @@ function logout() {
 }
 	
 function start(){
-	alert(window.localStorage.getItem("22sek"));
-	if(window.localStorage.getItem("22sek")=="undefined"){
-	
+	if(window.localStorage.getItem("22sek")==null){
+	alert("no cookie set yet - open login");
 	}
 }
 	

@@ -1,0 +1,146 @@
+<html>
+<head>
+<!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src *  'unsafe-inline'; script-src *  'unsafe-inline'; media-src *">-->
+<title>ITAS WifiSec</title>
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script src="jquery.min.js"></script>
+<script src="jquery.cookie.js"></script>
+<script type = "text/javascript">
+var cookie = null;
+
+function printvoucher(id) {
+alert("printed " + id);
+}
+
+function add() { 
+user = $("#user").val();
+valid = $("#valid").val();
+alert(user);
+alert(valid);
+$.ajax({
+    type: 'GET',
+    url: 'http://' + cookie + '/wifisec/addentry.php',
+    data: "user=" + user + "&valid=" + valid,
+    success: function(data){
+	alert("Benutzer " + user + " mit Passwort " + data);
+	location.reload();
+    }
+})
+}
+
+function del(id) {
+//alert("deleted " + id);
+var r = confirm("Diesen Eintrag lÃ¶schen?");
+if (r == true) {
+$.ajax({
+    type: 'GET',
+    url: 'http://' + cookie + '/wifisec/delentry.php',
+    data: "id=" + id,
+    success: function(data){
+	//alert("deleted finished");
+	location.reload();
+    }
+})
+}
+}
+
+function openrow(id) {
+//alert(id);
+row = "row" + id;
+display = $('#' + row).css('display');
+if(display != 'none') {
+$('#' + row).hide();
+} else {
+$('#' + row).show();
+}
+}
+
+
+function check() {
+
+server = document.myform.server.value;
+pw = document.myform.pw.value;
+
+link = "http://" + server + "/wifisec/login.php";
+
+	//alert(link);
+
+	$.ajax({
+	type: "GET",
+	  url: link,
+	  crossDomain: true,
+	data: "pw=" + pw + "&server=" + server,  
+	success: function(data) {	
+    //alert( $.cookie("wifisec") );
+    if(data=="false") {alert("falsches PW");}
+    if(data=="true") {
+    	window.localStorage.setItem("wifisec", server);
+    	ChangeToList();}
+	},
+    error: function(xhr, textStatus, errorThrown) {
+    alert("keine Verbindung zum Server");
+    }
+});
+}
+
+function ChangeToList() {
+//alert("jumped to function");
+cookie = window.localStorage.getItem("wifisec");
+alert(cookie);
+if( cookie == null ) {alert("no cookie set yet"); return 0;} else {
+//alert($.cookie('wifisec'));
+link = "http://" + cookie + "/wifisec/list.php";
+//alert(link);
+	$.ajax({
+	type: "GET",
+	  url: link,
+	data: "pw=nothing",
+	dataType: "html",
+	success: function(data) {
+	//alert(data);	
+    	$('#login').hide();
+	$('#logout').show();
+	$('#result').show();
+	$('#result').html(data);
+	
+	},
+    error: function(xhr, textStatus, errorThrown) {
+    alert("keine Verbindung2 zum Server");
+    logout();
+    }
+
+	
+});
+}
+}
+
+function logout() {
+    //$.removeCookie('wifisec');
+    
+   // document.cookie = 'wifisec' + '=;expires:Thu, 01 Jan 1970 00:00:01 GMT;';
+    //location.reload(true);
+    window.localStorage.removeItem("wifisec");
+    location.reload(true);
+}
+
+</script>
+
+</head>
+
+<body onload="javascript:ChangeToList()">
+<div id="login">
+<div id="logo"></div>
+<div id="welcome">ITAS Wifisec</div>
+ <form name="myform" action="">
+    <input name="server" type="text" autofocus placeholder="Server" autocomplete="on" size="15" maxlength="50"/><br>
+	<input name="pw" type="password" autofocus placeholder="Password" autocomplete="on" size="15" maxlength="15"/><br>
+         <input type="button" value="Login" onclick="check();"/>
+  </form>
+</div>
+<div id="result"></div>
+<div id="logout"><a href="javascript:logout()">logout</a></div>
+
+</body>
+
+</html>

@@ -8,7 +8,7 @@
 <script src="jquery.cookie.js"></script>
 <script type = "text/javascript">
 var cookie = null;
-
+link = "http://22sekunden.at/apis/app/login.php";
 
 
 
@@ -79,16 +79,17 @@ function logout() {
     location.reload(true);
 }
 	
-function checksession(){
+function start(){
+	alert(window.localStorage.getItem("22sek"));
+	if(window.localStorage.getItem("22sek")=="undefined"){
 	
+	}
 }
 	
 function login(){
 	user = document.myform.user.value;
 	pw = document.myform.pw.value;
 	
-	
-	link = "http://22sekunden.at/apis/app/login.php";
 
 	//alert(link);
 
@@ -99,21 +100,41 @@ function login(){
 		data: "pw=" + pw + "&user=" + user,  
 		success: function(data) {	
     			//alert( $.cookie("wifisec") );
-    			if(data=="false") {
-				alert("falsches PW");
+    				if(data=="false") {
+					alert("falsches PW");
 				}
-    			if(data=="true") {
-    			window.localStorage.setItem("22sek", user);
-    			ChangeToList();}
-			},
+    				if(data=="true") {
+    					window.localStorage.setItem("22sek", user);
+    					ChangeToList();
+				}
+		},
     		error: function(xhr, textStatus, errorThrown) {
-    		alert("keine Verbindung zum Server");
+    		alert("could not connect to authentication server");
     		}
 	});
 }
 
 	
-function start(){
+function goto(url){
+	user = window.localStorage.getItem("22sek");
+	$.ajax({
+		type: "GET",
+	  	url: url,
+	  	crossDomain: true,
+		data: "user=" + user,  
+		success: function(data) {	
+    			//alert( $.cookie("wifisec") );
+    			if(data=="false") {
+				alert("falsches PW");
+			}
+    			if(data=="true") {
+    			
+			}
+		},
+    		error: function(xhr, textStatus, errorThrown) {
+    		alert("could not connect");
+    		}
+	});
 	
 }
 
@@ -121,7 +142,7 @@ function start(){
 
 </head>
 
-<body onload="javascript:ChangeToList()">
+<body onload="javascript:start()">
 	
 <div id="login">
 <div id="logo"></div>

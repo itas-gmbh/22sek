@@ -9,7 +9,39 @@
 <script type = "text/javascript">
 var cookie = null;
 
-
+//file = link to server or local file i.e. http://test.at/file1.php
+//attr = is query string
+//method = GET or POST(default)	
+function getpage(file,attr,method) {
+	alert(file);
+	alert(attr);
+	alert(method);
+	
+	if(method == undefined) {
+		method = "POST";	
+	}
+	
+	if(file == undefined) {
+		alert("no file selected");
+		return 0; 	
+	}
+	
+	$.ajax({
+		type: method,
+	  	url: file,
+	  	crossDomain: true,
+		data: attr,  
+		success: function(data) {	
+    			//alert( $.cookie("wifisec") );
+    				return data;
+		},
+    		error: function(xhr, textStatus, errorThrown) {
+    		alert("could not connect to authentication server");
+		return 0;
+    		}
+	});	
+	
+}
 
 
 function check() {
@@ -19,24 +51,6 @@ pw = document.myform.pw.value;
 
 link = "http://" + server + "/wifisec/login.php";
 
-	//alert(link);
-
-	$.ajax({
-	type: "GET",
-	  url: link,
-	  crossDomain: true,
-	data: "pw=" + pw + "&server=" + server,  
-	success: function(data) {	
-    //alert( $.cookie("wifisec") );
-    if(data=="false") {alert("falsches PW");}
-    if(data=="true") {
-    	window.localStorage.setItem("wifisec", server);
-    	ChangeToList();}
-	},
-    error: function(xhr, textStatus, errorThrown) {
-    alert("keine Verbindung zum Server");
-    }
-});
 }
 
 function ChangeToList() {
@@ -116,28 +130,9 @@ function login(){
 }
 
 	
-function goto(url){
-	user = window.localStorage.getItem("22sek");
-	$.ajax({
-		type: "GET",
-	  	url: url,
-	  	crossDomain: true,
-		data: "user=" + user,  
-		success: function(data) {	
-    			//alert( $.cookie("wifisec") );
-    			if(data=="false") {
-				alert("falsches PW");
-			}
-    			if(data=="true") {
-    			
-			}
-		},
-    		error: function(xhr, textStatus, errorThrown) {
-    		alert("could not connect");
-    		}
-	});
+
 	
-}
+
 
 </script>
 

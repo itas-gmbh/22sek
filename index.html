@@ -10,26 +10,30 @@
 var cookie = null;
 
 	
-function test() {
-return "hallo welt";	
+function to_result(data) {
+	alert("put to_result");
+	alert(data);
+	
+$('#result').html(data);	
 }
 //file = link to server or local file i.e. http://test.at/file1.php
 //attr = is query string
 //method = GET or POST(default)	
-function getpage(file,attr,method) {
-	alert(file);
-	alert(attr);
-	alert(method);
+//the function to call
+function getpage(file,attr,method,func) {
+	//alert(file);
+	//alert(attr);
+	//alert(method);
 	
 	if(method == undefined) {
 		method = "POST";	
 	}
-	alert("step1");
+	//alert("step1");
 	if(file == undefined) {
 		alert("no file selected");
 		return 0; 	
 	}
-	alert("step2");
+	//alert("step2");
 	$.ajax({
 		type: method,
 	  	url: file,
@@ -39,7 +43,9 @@ function getpage(file,attr,method) {
     			//alert( $.cookie("wifisec") );
 				alert("this is the result of ajax");
 				alert(data);
-    				return data;
+				alert("calling function:");
+				alert(func);
+    				func(data);
 		},
     		error: function(xhr, textStatus, errorThrown) {
     		alert("could not connect to authentication server");

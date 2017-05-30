@@ -20,7 +20,7 @@ function getpage(file,attr,method) {
 	if(method == undefined) {
 		method = "POST";	
 	}
-	
+	alert("step1");
 	if(file == undefined) {
 		alert("no file selected");
 		return 0; 	
@@ -34,7 +34,7 @@ function getpage(file,attr,method) {
 		data: attr,  
 		success: function(data) {	
     			//alert( $.cookie("wifisec") );
-				alert("this is the result of ajax:");
+				alert("this is the result of ajax");
 				alert(data);
     				return data;
 		},

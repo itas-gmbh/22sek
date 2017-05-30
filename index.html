@@ -94,10 +94,12 @@ function logout() {
 }
 	
 function start(){
-	alert("hallo");
-	if(window.localStorage.getItem("22sek")==null){
-	alert("no cookie set yet - open login");
-	}
+	alert("hallo this is function start");
+	//if(window.localStorage.getItem("22sek")==null){
+	//alert("no cookie set yet - open login");
+	//}
+	result = getpage('login_gui.html','',GET);
+	$('#result').html(result);
 }
 	
 function login(){
@@ -140,15 +142,7 @@ function login(){
 
 <body onload="javascript:start()">
 	
-<div id="login">
-<div id="logo"></div>
-<div id="welcome">22Sekunden</div>
- <form name="myform" action="">
-    <input name="user" type="text" autofocus placeholder="User" autocomplete="on" size="15" maxlength="50"/><br>
-	<input name="pw" type="password" autofocus placeholder="Password" autocomplete="on" size="15" maxlength="15"/><br>
-         <input type="button" value="Login" onclick="check();"/>
-  </form>
-</div>
+
 <div id="result"></div>
 <div id="logout"><a href="javascript:logout()">logout</a></div>
 

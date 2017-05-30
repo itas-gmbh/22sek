@@ -33,6 +33,8 @@ function getpage(file,attr,method) {
 		data: attr,  
 		success: function(data) {	
     			//alert( $.cookie("wifisec") );
+				alert("this is the result of ajax:");
+				alert(data);
     				return data;
 		},
     		error: function(xhr, textStatus, errorThrown) {

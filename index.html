@@ -9,6 +9,10 @@
 <script type = "text/javascript">
 var cookie = null;
 
+	
+function test() {
+return "hallo welt";	
+}
 //file = link to server or local file i.e. http://test.at/file1.php
 //attr = is query string
 //method = GET or POST(default)	
@@ -100,7 +104,8 @@ function start(){
 	//if(window.localStorage.getItem("22sek")==null){
 	//alert("no cookie set yet - open login");
 	//}
-	var ajaxresult = getpage('login_gui.html','','GET');
+	var ajaxresult = test();
+	var ajaxresult2 = getpage('login_gui.html','','GET');
 	alert("this is the return value");
 	alert(ajaxresult);
 	$('#result').html(ajaxresult);

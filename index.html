@@ -104,8 +104,8 @@ function start(){
 	//if(window.localStorage.getItem("22sek")==null){
 	//alert("no cookie set yet - open login");
 	//}
-	var ajaxresult = test();
-	var ajaxresult2 = getpage('login_gui.html','','GET');
+	
+	var ajaxresult = getpage('login_gui.html','','GET');
 	alert("this is the return value");
 	alert(ajaxresult);
 	$('#result').html(ajaxresult);
